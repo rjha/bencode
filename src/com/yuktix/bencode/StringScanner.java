@@ -3,6 +3,8 @@ package com.yuktix.bencode;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.yuktix.bencode.ds.StringType;
+
 public class StringScanner implements IScanner{
 	
 	private CompositeObject parent ;
@@ -27,14 +29,11 @@ public class StringScanner implements IScanner{
 			if(flag) break ;
 		}
 		
-		// @debug
-		System.out.println("length =>" + this.length);
-		
 		byte[] bytes = new byte[this.length];
 		is.read(bytes);
 		
 		if(parent != null)
-			parent.addString(bytes);
+			parent.add(new StringType(bytes));
 	}
 	
 	private boolean getNumeric(int i) throws IOException {

@@ -3,6 +3,8 @@ package com.yuktix.bencode;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.yuktix.bencode.ds.IntegerType;
+
 public class IntegerScanner implements IScanner{
 	
 	private CompositeObject parent ;
@@ -91,17 +93,9 @@ public class IntegerScanner implements IScanner{
 		}
 		
 		if(parent != null) {
-			parent.addInteger(this.value);
+			parent.add(new IntegerType(this.value));
 		}
 		
-	}
-
-	public long getValue() {
-		return this.value;
-	}
-
-	public int getLength() {
-		return length;
 	}
 
 }

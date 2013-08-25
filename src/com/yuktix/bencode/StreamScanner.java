@@ -2,15 +2,21 @@ package com.yuktix.bencode;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.yuktix.bencode.ds.IBencodeType;
 
 public class StreamScanner extends CompositeObject implements IScanner{
 	
+	private List<IBencodeType> elements ;
+	
 	public StreamScanner() {
-
+		this.elements = new ArrayList<IBencodeType>();
 	}
 	
 	public void scan(InputStream is) throws IOException {
-		// i means IntegerScanner/ else StringScanner
+		
 		int i ;
 		IScanner scanner ;
 		
@@ -19,6 +25,10 @@ public class StreamScanner extends CompositeObject implements IScanner{
 			switch(b) {
 				case 'i' :
 					scanner = new IntegerScanner(this);
+					scanner.scan(is);
+					break ;
+				case 'd' :
+					scanner = new DictionaryScanner(this);
 					scanner.scan(is);
 					break ;
 				case '1' :
@@ -41,16 +51,13 @@ public class StreamScanner extends CompositeObject implements IScanner{
 	}
 
 	@Override
-	public void addString(byte[] s) {
-		System.out.println("string => " + new String(s));
-		
+	public void add(IBencodeType data) {
+		this.elements.add(data);
 	}
-
-	@Override
-	public void addInteger(long i) {
-		System.out.println("integer => " + i);
-		
-	}
-
 	
+	public void print() {
+		for(IBencodeType element : elements) {
+			System.out.print(element.toString());
+		}
+	}
 }

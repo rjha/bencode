@@ -1,9 +1,9 @@
 package com.yuktix.bencode;
 
+import java.io.IOException;
+import com.yuktix.bencode.ds.IBencodeType;
+
 
 public abstract class CompositeObject {
-	
-	public abstract void addString(byte[] s);
-	public abstract void addInteger(long value);
-	
+	public abstract void add(IBencodeType data) throws IOException;
 }
