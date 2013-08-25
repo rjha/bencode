@@ -21,4 +21,13 @@ public class StringType implements IBencodeType{
 	public String toString() {
 		return "[string:" + this.value + "]\n" ;
 	}
+
+	@Override
+	public String bencode() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.value.length());
+		sb.append(":");
+		sb.append(this.value);
+		return sb.toString();
+	}
 }

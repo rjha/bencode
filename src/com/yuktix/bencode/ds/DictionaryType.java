@@ -34,6 +34,31 @@ public class DictionaryType implements IBencodeType{
 		
 		return sb.toString() ;
 	}
+
+	@Override
+	public String bencode() {
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("d");
+		// @todo sort dictionary keys on byte order
+		// from the spec: Keys must be strings and appear in sorted order 
+		// (sorted as raw strings, not alphanumerics). 
+		// The strings should be compared using a binary comparison,
+		// not a culture-specific "natural" comparison
+		
+		Set<String> keys = map.keySet() ;
+		
+		for(String key : keys) {
+			
+			sb.append(key.length());
+			sb.append(":");
+			sb.append(key);
+			sb.append(map.get(key).bencode());
+		}
+		
+		sb.append("e");
+		return sb.toString();
+	}
 	
 	
 }

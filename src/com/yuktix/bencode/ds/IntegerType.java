@@ -19,4 +19,13 @@ public class IntegerType implements IBencodeType {
 	public String toString() {
 		return "[int:" + this.value + "] \n"  ;
 	}
+
+	@Override
+	public String bencode() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("i");
+		sb.append(this.value);
+		sb.append("e");
+		return sb.toString();
+	}
 }

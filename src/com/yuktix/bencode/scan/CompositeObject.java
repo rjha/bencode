@@ -1,4 +1,4 @@
-package com.yuktix.bencode;
+package com.yuktix.bencode.scan;
 
 import java.io.IOException;
 import com.yuktix.bencode.ds.IBencodeType;
