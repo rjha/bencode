@@ -5,31 +5,36 @@ import java.io.InputStream;
 
 public class StringScanner implements IScanner{
 	
-	private IScanner parent ;
-	InputStream is ;
+	private CompositeObject parent ;
 	private long value ;
 	private boolean isData ;
 	private int length ;
+	private int peek ;
 	
-	public StringScanner(IScanner parent, InputStream is) {
+	public StringScanner(CompositeObject parent, int b) {
 		this.parent = parent ;
-		this.is  = is ;
 		this.isData = false;
 		this.length = 0 ;
+		this.peek = b ;
 		
 	}
 	
-	public void scan() throws IOException {
+	public void scan(InputStream is) throws IOException {
+		// first byte
+		getNumeric(this.peek);
+		
 		int i ;
-		while( ((i = this.is.read()) >= 0) && !this.isData ) {
+		while( ((i = is.read()) >= 0) && !this.isData ) {
 			getNumeric(i);
 		}
+		
+		System.out.println("length =>" + this.length);
 		
 		byte[] bytes = new byte[this.length];
 		is.read(bytes);
 		
 		if(parent != null)
-			parent.ping(this);
+			parent.addString(bytes);
 	}
 	
 	private void getNumeric(int i) throws IOException {
@@ -63,12 +68,6 @@ public class StringScanner implements IScanner{
 
 	public long getValue() {
 		return this.value;
-	}
-
-	@Override
-	public void ping(IScanner child) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

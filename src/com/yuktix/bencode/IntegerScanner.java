@@ -5,19 +5,17 @@ import java.io.InputStream;
 
 public class IntegerScanner implements IScanner{
 	
-	private IScanner parent ;
-	InputStream is ;
+	private CompositeObject parent ;
 	private long value ;
 	private int length ;
 	
 	
-	public IntegerScanner(IScanner parent, InputStream is) {
+	public IntegerScanner(CompositeObject parent) {
 		this.parent = parent ;
-		this.is  = is ;
 		this.length = 0 ;
 	}
 	
-	public void scan() throws IOException {
+	public void scan( InputStream is) throws IOException {
 		
 		boolean negative = false;
 		boolean padding = false ;
@@ -90,9 +88,8 @@ public class IntegerScanner implements IScanner{
 			this.value *= -1;
 		}
 		
-		// control back to parent
 		if(parent != null) {
-			parent.ping(this);
+			parent.addInteger(this.value);
 		}
 		
 	}
@@ -103,12 +100,6 @@ public class IntegerScanner implements IScanner{
 
 	public int getLength() {
 		return length;
-	}
-
-	@Override
-	public void ping(IScanner child) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
