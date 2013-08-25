@@ -53,7 +53,7 @@ public class IntegerScanner implements IScanner{
 		}
 		
 		// next bytes
-		while (((b = is.read()) >= 0) && !done) {
+		while ((b = is.read()) >= 0) {
 			if(padding && (this.length == 1) && (b != 'e')) {
 				throw new IOException("found zero padding of integer");
 			}
@@ -80,8 +80,10 @@ public class IntegerScanner implements IScanner{
 					this.value = (this.value * 10) + digit;
 					this.length++ ;
 					break ;
-					
 			}
+			
+			if(done)
+				break;
 		}
 		
 		if (negative) {

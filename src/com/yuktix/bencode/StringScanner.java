@@ -6,14 +6,11 @@ import java.io.InputStream;
 public class StringScanner implements IScanner{
 	
 	private CompositeObject parent ;
-	private long value ;
-	private boolean isData ;
 	private int length ;
 	private int peek ;
 	
 	public StringScanner(CompositeObject parent, int b) {
 		this.parent = parent ;
-		this.isData = false;
 		this.length = 0 ;
 		this.peek = b ;
 		
@@ -21,13 +18,16 @@ public class StringScanner implements IScanner{
 	
 	public void scan(InputStream is) throws IOException {
 		// first byte
+		boolean flag ;
 		getNumeric(this.peek);
 		
 		int i ;
-		while( ((i = is.read()) >= 0) && !this.isData ) {
-			getNumeric(i);
+		while((i = is.read()) >= 0) {
+			flag = getNumeric(i);
+			if(flag) break ;
 		}
 		
+		// @debug
 		System.out.println("length =>" + this.length);
 		
 		byte[] bytes = new byte[this.length];
@@ -37,7 +37,9 @@ public class StringScanner implements IScanner{
 			parent.addString(bytes);
 	}
 	
-	private void getNumeric(int i) throws IOException {
+	private boolean getNumeric(int i) throws IOException {
+		
+		boolean flag = false;
 		int digit ;
 		byte b = (byte) i ;
 		
@@ -47,7 +49,7 @@ public class StringScanner implements IScanner{
 					throw new IOException("string length is unspecified") ;
 				}
 				
-				this.isData = true ;
+				flag = true ;
 				break ;
 			case '0' :
 			case '1' :
@@ -64,10 +66,7 @@ public class StringScanner implements IScanner{
 				break ;
 		}
 		
-	}
-
-	public long getValue() {
-		return this.value;
+		return flag;
 	}
 
 }
