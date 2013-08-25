@@ -1,4 +1,4 @@
-package mybencode;
+package com.yuktix.bencode;
 
 import java.io.IOException;
 import java.io.InputStream;
