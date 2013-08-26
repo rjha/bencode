@@ -10,61 +10,26 @@ import com.yuktix.bencode.ds.StringType;
 
 public class DictionaryScanner extends CompositeObject implements IScanner{
 	
-	private CompositeObject parent;
 	private String key ;
 	private HashMap<String,IBencodeType> map ;
 	
-	public DictionaryScanner(CompositeObject parent) {
-		this.parent = parent ;
+	public DictionaryScanner() {
 		this.key = null ;
 		this.map = new HashMap<String,IBencodeType>();
 	}
 	
-	public void scan(InputStream is) throws IOException {
-
-		int i ;
-		IScanner scanner ;
-		boolean done = false ;
-		
-		while( (i = is.read()) >= 0 ) {
-			byte b = (byte) i ;
-			switch(b) {
-				case 'e' :
-					done = true ;
-					break ;
-					
-				case 'i' :
-					scanner = new IntegerScanner(this);
-					scanner.scan(is);
-					break ;
-				case 'd' :
-					scanner = new DictionaryScanner(this);
-					scanner.scan(is);
-					break ;
-				case '1' :
-				case '2' :
-				case '3' :
-				case '4' :
-				case '5' :
-				case '6' :
-				case '7' :
-				case '8' :
-				case '9' :
-					scanner = new StringScanner(this,i);
-					scanner.scan(is);
-					break ;
-				default:
-					throw new IOException("unexpected character in stream " + Character.forDigit(b, 10));
-			}
-			
-			if(done)
-				break ;
-		}
-		
-		if(parent != null)
-			parent.add(new DictionaryType(this.map));
+	public HashMap<String, IBencodeType> getMap() {
+		return map;
 	}
 
+	@Override
+	public void scan(CompositeObject parent,InputStream is) throws IOException {
+		super.scan(parent, is);
+		if(parent != null)
+			parent.add(new DictionaryType(this.map));
+		
+	}
+	
 	@Override
 	public void add(IBencodeType data) throws IOException {
 		

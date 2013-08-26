@@ -2,23 +2,20 @@ package com.yuktix.bencode.scan;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import com.yuktix.bencode.ds.StringType;
 
 public class StringScanner implements IScanner{
 	
-	private CompositeObject parent ;
 	private int length ;
 	private int peek ;
 	
-	public StringScanner(CompositeObject parent, int b) {
-		this.parent = parent ;
+	public StringScanner(int b) {
 		this.length = 0 ;
 		this.peek = b ;
 		
 	}
 	
-	public void scan(InputStream is) throws IOException {
+	public void scan(CompositeObject parent,InputStream is) throws IOException {
 		// first byte
 		boolean flag ;
 		getNumeric(this.peek);

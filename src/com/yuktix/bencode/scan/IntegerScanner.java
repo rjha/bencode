@@ -7,17 +7,15 @@ import com.yuktix.bencode.ds.IntegerType;
 
 public class IntegerScanner implements IScanner{
 	
-	private CompositeObject parent ;
 	private long value ;
 	private int length ;
 	
 	
-	public IntegerScanner(CompositeObject parent) {
-		this.parent = parent ;
+	public IntegerScanner() {
 		this.length = 0 ;
 	}
 	
-	public void scan( InputStream is) throws IOException {
+	public void scan(CompositeObject parent,InputStream is) throws IOException {
 		
 		boolean negative = false;
 		boolean padding = false ;
