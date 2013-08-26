@@ -26,7 +26,7 @@ public class ListType implements IBencodeType {
 		ListIterator<IBencodeType> iter = this.list.listIterator() ;
 		
 		while(iter.hasNext()) {
-			sb.append("\telement:" );
+			sb.append("\t:" );
 			sb.append(iter.next().toString());
 			sb.append("\n");
 		}

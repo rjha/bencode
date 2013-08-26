@@ -10,7 +10,6 @@ public class IntegerScanner implements IScanner{
 	private long value ;
 	private int length ;
 	
-	
 	public IntegerScanner() {
 		this.length = 0 ;
 	}
