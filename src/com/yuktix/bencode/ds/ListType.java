@@ -22,13 +22,12 @@ public class ListType implements IBencodeType {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[List:\n");
+		sb.append("[List: ");
 		ListIterator<IBencodeType> iter = this.list.listIterator() ;
 		
 		while(iter.hasNext()) {
-			sb.append("\t:" );
+			sb.append(" " );
 			sb.append(iter.next().toString());
-			sb.append("\n");
 		}
 		
 		sb.append("] \n");

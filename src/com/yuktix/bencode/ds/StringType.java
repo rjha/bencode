@@ -19,7 +19,7 @@ public class StringType implements IBencodeType{
 	
 	@Override
 	public String toString() {
-		return "[string:" + this.value + "]\n" ;
+		return "[string:" + this.value + "]" ;
 	}
 
 	@Override

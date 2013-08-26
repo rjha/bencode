@@ -17,7 +17,7 @@ public class IntegerType implements IBencodeType {
 	
 	@Override
 	public String toString() {
-		return "[int:" + this.value + "] \n"  ;
+		return "[int:" + this.value + "]"  ;
 	}
 
 	@Override
