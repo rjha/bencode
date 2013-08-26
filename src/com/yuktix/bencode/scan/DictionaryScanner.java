@@ -17,13 +17,10 @@ public class DictionaryScanner extends CompositeObject implements IScanner{
 		this.key = null ;
 		this.map = new HashMap<String,IBencodeType>();
 	}
-	
-	public HashMap<String, IBencodeType> getMap() {
-		return map;
-	}
 
 	@Override
 	public void scan(CompositeObject parent,InputStream is) throws IOException {
+		
 		super.scan(parent, is);
 		if(parent != null)
 			parent.add(new DictionaryType(this.map));

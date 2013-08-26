@@ -16,10 +16,6 @@ public class ListScanner extends CompositeObject implements IScanner{
 		this.list = new ArrayList<IBencodeType>();
 	}
 	
-	public List<IBencodeType> getList() {
-		return list;
-	}
-	
 	@Override
 	public void scan(CompositeObject parent,InputStream is) throws IOException {
 		super.scan(parent, is);
