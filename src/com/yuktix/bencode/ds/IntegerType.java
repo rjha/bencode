@@ -21,7 +21,7 @@ public class IntegerType implements IBencodeType {
 	
 	@Override
 	public String toString() {
-		return "[int:" + this.value + "]"  ;
+		return Long.toString(value);
 	}
 
 	@Override

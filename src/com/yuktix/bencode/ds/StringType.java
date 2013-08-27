@@ -23,7 +23,7 @@ public class StringType implements IBencodeType{
 	@Override
 	public String toString() {
 		String str = new String(this.bytes, StandardCharsets.US_ASCII);
-		return "[string:" + str + "]" ;
+		return  str  ;
 	}
 
 	@Override
