@@ -1,5 +1,7 @@
 package com.yuktix.bencode.scan;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,10 @@ public class StreamScanner extends CompositeObject implements IScanner{
 	
 	public List<IBencodeType> getElements() {
 		return elements;
+	}
+	
+	public void munch(InputStream is) throws IOException {
+		this.scan(null, is);
 	}
 	
 	@Override
