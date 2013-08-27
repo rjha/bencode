@@ -5,4 +5,4 @@
 *.war
 *.ear
 /bin
-Test.java
+/src/com/yuktix/bencode/test
