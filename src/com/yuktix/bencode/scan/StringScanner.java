@@ -2,6 +2,7 @@ package com.yuktix.bencode.scan;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import com.yuktix.bencode.ds.StringType;
 
 public class StringScanner implements IScanner{
@@ -16,18 +17,27 @@ public class StringScanner implements IScanner{
 	}
 	
 	public void scan(CompositeObject parent,InputStream is) throws IOException {
-		// first byte
-		boolean flag ;
+		
+		boolean separator = false ;
 		getNumeric(this.peek);
 		
+		// string length is numeric part
 		int i ;
 		while((i = is.read()) >= 0) {
-			flag = getNumeric(i);
-			if(flag) break ;
+			separator = getNumeric(i);
+			if(separator) break ;
+		}
+		
+		if(!separator) {
+			throw new IOException("unexpected : string length and data separator not found!") ;
 		}
 		
 		byte[] bytes = new byte[this.length];
-		is.read(bytes);
+		int actual = is.read(bytes);
+		
+		if(actual != this.length) {
+			throw new IOException("unexpected end of string") ;
+		}
 		
 		if(parent != null)
 			parent.add(new StringType(bytes));
@@ -42,7 +52,7 @@ public class StringScanner implements IScanner{
 		switch(b) {
 			case ':' :
 				if(this.length == 0 ) {
-					throw new IOException("string length is unspecified") ;
+					throw new IOException("unexpected : string length is not specified") ;
 				}
 				
 				flag = true ;
