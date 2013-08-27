@@ -5,7 +5,7 @@ import java.io.InputStream;
 
 import com.yuktix.bencode.ds.StringType;
 
-public class StringScanner implements IScanner{
+class StringScanner implements IScanner{
 	
 	private int length ;
 	private int peek ;
@@ -13,7 +13,6 @@ public class StringScanner implements IScanner{
 	public StringScanner(int b) {
 		this.length = 0 ;
 		this.peek = b ;
-		
 	}
 	
 	public void scan(CompositeObject parent,InputStream is) throws IOException {

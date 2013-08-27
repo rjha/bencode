@@ -5,7 +5,7 @@ import java.io.InputStream;
 
 import com.yuktix.bencode.ds.IntegerType;
 
-public class IntegerScanner implements IScanner{
+class IntegerScanner implements IScanner{
 	
 	private long value ;
 	private int length ;

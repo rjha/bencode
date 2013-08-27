@@ -8,7 +8,7 @@ import com.yuktix.bencode.ds.DictionaryType;
 import com.yuktix.bencode.ds.IBencodeType;
 import com.yuktix.bencode.ds.StringType;
 
-public class DictionaryScanner extends CompositeObject implements IScanner{
+class DictionaryScanner extends CompositeObject implements IScanner{
 	
 	private byte[] key ;
 	private HashMap<byte[],IBencodeType> map ;

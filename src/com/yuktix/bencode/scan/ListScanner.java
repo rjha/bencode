@@ -8,7 +8,7 @@ import java.util.List;
 import com.yuktix.bencode.ds.IBencodeType;
 import com.yuktix.bencode.ds.ListType;
 
-public class ListScanner extends CompositeObject implements IScanner{
+class ListScanner extends CompositeObject implements IScanner{
 	
 	private List<IBencodeType> list ;
 	
