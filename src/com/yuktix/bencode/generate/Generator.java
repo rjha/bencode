@@ -1,22 +1,23 @@
 package com.yuktix.bencode.generate;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 import com.yuktix.bencode.ds.IBencodeType;
 
 public class Generator {
 	
-	public static String generate(IBencodeType element) {
-		return element.bencode();
+	public static void generate(OutputStream os,IBencodeType element) throws IOException {
+		element.bencode(os);
 	}
 	
-	public static String generate(List<IBencodeType> elements) {
-		StringBuilder sb = new StringBuilder() ;
+	public static void generate(OutputStream os, List<IBencodeType> elements) throws IOException {
+		
 		for(IBencodeType element : elements) {
-			sb.append(element.bencode());
+			element.bencode(os);
 		}
 		
-		return sb.toString();
 	}
 	
 }

@@ -1,5 +1,7 @@
 package com.yuktix.bencode.ds;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -36,19 +38,16 @@ public class ListType implements IBencodeType {
 	}
 
 	@Override
-	public String bencode() {
+	public void bencode(OutputStream os) throws IOException {
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("l");
+		os.write('l');
 		
-		// @todo list keys ordering?
 		ListIterator<IBencodeType> iter = this.list.listIterator() ;
 		while(iter.hasNext()) {
-			sb.append(iter.next().bencode());
+			iter.next().bencode(os);
 		}
 		
-		sb.append("e");
-		return sb.toString();
+		os.write('e');
 		
 	}
 	

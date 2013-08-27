@@ -10,12 +10,12 @@ import com.yuktix.bencode.ds.StringType;
 
 public class DictionaryScanner extends CompositeObject implements IScanner{
 	
-	private String key ;
-	private HashMap<String,IBencodeType> map ;
+	private byte[] key ;
+	private HashMap<byte[],IBencodeType> map ;
 	
 	public DictionaryScanner() {
 		this.key = null ;
-		this.map = new HashMap<String,IBencodeType>();
+		this.map = new HashMap<byte[],IBencodeType>();
 	}
 
 	@Override
@@ -31,7 +31,8 @@ public class DictionaryScanner extends CompositeObject implements IScanner{
 	public void add(IBencodeType data) throws IOException {
 		
 		if( (data instanceof StringType) && (this.key == null)) {
-			this.key = data.toString() ;
+			StringType st = (StringType) data ;
+			this.key = st.getBytes() ;
 		} else {
 			if(this.key == null ) {
 				throw new IOException("expected key : found null");

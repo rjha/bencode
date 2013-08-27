@@ -13,6 +13,10 @@ public class StreamScanner extends CompositeObject implements IScanner{
 		this.elements = new ArrayList<IBencodeType>();
 	}
 	
+	public List<IBencodeType> getElements() {
+		return elements;
+	}
+	
 	@Override
 	public void add(IBencodeType data) {
 		this.elements.add(data);
@@ -20,7 +24,7 @@ public class StreamScanner extends CompositeObject implements IScanner{
 	
 	public void print() {
 		for(IBencodeType element : elements) {
-			System.out.print(element.toString());
+			System.out.println(element.toString());
 		}
 	}
 }

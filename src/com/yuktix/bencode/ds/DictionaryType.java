@@ -1,5 +1,7 @@
 package com.yuktix.bencode.ds;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,7 +14,7 @@ public class DictionaryType implements IBencodeType{
 
 	private TreeMap<byte[],IBencodeType> sortedMap ;
 
-	public DictionaryType(HashMap<String,IBencodeType> map) {
+	public DictionaryType(HashMap<byte[],IBencodeType> map) {
 		this.setMap(map) ;
 	}
 	
@@ -20,7 +22,7 @@ public class DictionaryType implements IBencodeType{
 		return sortedMap;
 	}
 	
-	public void setMap(HashMap<String,IBencodeType> map) {
+	public void setMap(HashMap<byte[],IBencodeType> map) {
 		// sort dictionary keys on byte order
 		// from the spec: 
 		// ---------------
@@ -32,10 +34,10 @@ public class DictionaryType implements IBencodeType{
 		// 
 		
 		this.sortedMap = new TreeMap<byte[],IBencodeType>(new ByteArrayComparator());
-		Set<String> keys = map.keySet() ;
+		Set<byte[]> keys = map.keySet() ;
 		
-		for(String key : keys) {
-			this.sortedMap.put(key.getBytes(StandardCharsets.US_ASCII), map.get(key)) ;
+		for(byte[] key : keys) {
+			this.sortedMap.put(key, map.get(key)) ;
 		}
 		
 	}
@@ -50,13 +52,11 @@ public class DictionaryType implements IBencodeType{
 		while(sortedKeys.hasNext()) {
 			
 			byte[] bkey = sortedKeys.next();
-			String key = new String(bkey,StandardCharsets.US_ASCII);
-			
-			sb.append("\tkey:"+ key);
+			// dictionary keys are us-ascii
+			sb.append("\tkey:"+ new String(bkey, StandardCharsets.US_ASCII));
 			sb.append("\tvalue:" );
 			sb.append(this.sortedMap.get(bkey).toString());
 			sb.append("\n");
-			
 		}
 		
 		sb.append("] \n");
@@ -64,24 +64,24 @@ public class DictionaryType implements IBencodeType{
 	}
 
 	@Override
-	public String bencode() {
+	public void bencode(OutputStream os) throws IOException {
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("d");
-		
+		os.write('d');
 		Iterator<byte[]> sortedKeys = this.sortedMap.navigableKeySet().iterator() ;
 		
 		while(sortedKeys.hasNext()) {
 			byte[] bkey = sortedKeys.next();
-			String key = new String(bkey,StandardCharsets.US_ASCII);
-			sb.append(bkey.length);
-			sb.append(":");
-			sb.append(key);
-			sb.append(this.sortedMap.get(bkey).bencode());
+			// string length encoded in base10-ascii
+			os.write(Integer.toString(bkey.length).getBytes("US-ASCII"));
+			os.write(':');
+			os.write(bkey);
+			// value
+			this.sortedMap.get(bkey).bencode(os);
+			
 		}
 		
-		sb.append("e");
-		return sb.toString();
+		os.write('e');
+		
 	}
 	
 }
