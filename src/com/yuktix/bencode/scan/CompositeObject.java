@@ -25,6 +25,10 @@ public abstract class CompositeObject {
 					scanner = new IntegerScanner();
 					scanner.scan(this,is);
 					break ;
+				case 'f' :
+					scanner = new FloatScanner();
+					scanner.scan(this,is);
+					break ;
 				case 'd' :
 					scanner = new DictionaryScanner();
 					scanner.scan(this,is);
